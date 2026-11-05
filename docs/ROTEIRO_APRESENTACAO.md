@@ -71,7 +71,17 @@ Substitua `SEU_IPV4` pelo IPv4 real do computador. Não digite o marcador litera
 
 Combine a captura da tela do computador com a do telefone; a equipe pode gravar a tela do celular e inserir a captura no vídeo. A prévia web é útil para ensaiar os mesmos fluxos. No celular, a central oferece notificações locais; a web usa avisos dentro do aplicativo.
 
-### 6. Checklist de ensaio
+### 6. Fonte pública real — opcional antes da gravação
+
+Com a API ativa, execute na raiz:
+
+```powershell
+node scripts/import-public-weather.mjs
+```
+
+O coletor importa a temperatura do modelo Open-Meteo para a Sé e preserva a origem, o horário e `simulated=false`. Esse dado é uma estimativa meteorológica, não confirmação de ilha de calor. Precisa de internet e da chave de ingestão do backend; a chave de desenvolvimento é usada por padrão. Você pode abrir o detalhe desse registro para contrastar uma fonte externa real com os sensores simulados. A apresentação principal continua funcionando sem essa importação.
+
+### 7. Checklist de ensaio
 
 - README aberto no navegador, com os três integrantes visíveis.
 - Três terminais identificados: Backend, API e Expo.
@@ -180,7 +190,7 @@ Espere `Started UrbanRiskApplication`. Sem recarregar o app, mostre **Conexão r
 
 **Na tela:** mostre **Fontes de dados** e a seção de testes do README. Finalize no painel conectado.
 
-**Fala sugerida:** “A plataforma organiza três origens de informação com confiança e prioridade explicáveis. Validamos a API, o cliente HTTP e o fluxo de desconexão e recuperação. O repositório contém as duas stacks, as instruções e o roteiro. A demonstração usa dados simulados; integrações externas reais e push em segundo plano são evoluções futuras.”
+**Fala sugerida:** “A plataforma organiza três origens de informação com confiança e prioridade explicáveis. Validamos a API, o cliente HTTP e o fluxo de desconexão e recuperação. Há um coletor opcional de dados públicos do Open-Meteo. Os sensores da demonstração são simulados; sensores físicos e push em segundo plano são evoluções futuras.”
 
 **Resultado esperado:** encerramento coerente com o que o projeto realmente executa.
 

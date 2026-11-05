@@ -25,6 +25,7 @@ jobs:
         working-directory: frontend
       - run: npm test
         working-directory: frontend
+      - run: node --test scripts/tests/*.test.mjs
       - run: npm run typecheck
         working-directory: frontend
       - run: npm run lint

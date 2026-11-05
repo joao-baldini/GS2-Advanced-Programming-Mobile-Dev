@@ -11,6 +11,9 @@ Verificação local em **05/11/2026**, Windows, JDK 17, Node.js 24, H2 e prévia
 | SDK: `npx expo install --check` | Dependências compatíveis |
 | Expo: `npx expo-doctor` | 20/20 verificações aprovadas |
 | Bundle web: `npm run build:web` | Exportação concluída em `frontend/dist/` |
+| Bundles Android/iOS/web: `npx expo export --platform all` | Três plataformas exportadas; bundles Hermes para Android e iOS |
+| Coletor público: `node --test scripts/tests/*.test.mjs` | 3 testes aprovados |
+| Importação real do Open-Meteo | Temperatura de 26,9 °C, observação de 05/11/2026 às 12:15 UTC, persistida como PUBLIC_DATA e simulated=false |
 | API iniciada com H2 file | Health e endpoints de eventos e métricas respondendo |
 | Cadastro pelo app | Formulário validou obrigatórios, enviou POST e exibiu ocorrência persistida |
 | Novo sensor | POST de demonstração chegou ao painel e à central após sincronização |
@@ -42,7 +45,7 @@ Verificação local em **05/11/2026**, Windows, JDK 17, Node.js 24, H2 e prévia
 
 A execução visual foi feita no navegador usando React Native Web. Não houve teste em iPhone/Android físico, build de loja, teste de notificação nativa no aparelho, estudo de usabilidade, teste de carga ou verificação PostgreSQL. A equipe deve fazer o ensaio no aparelho usado na apresentação.
 
-Não há conexão automática com fontes governamentais, sensores físicos ou serviço de push. O carregamento inicial e o simulador usam dados explicitamente simulados. A API recebe dados externos já normalizados por um coletor autorizado.
+Não há conexão automática com fontes governamentais, sensores físicos ou serviço de push. O carregamento inicial e o simulador usam dados explicitamente simulados. O coletor opcional Open-Meteo foi executado contra a fonte pública real; a temperatura é estimativa meteorológica, não uma medição de rua. A API recebe dados externos normalizados por um coletor autorizado.
 
 A integração contínua está configurada; seu resultado remoto deve ser conferido na aba Actions depois do push. A gravação e a publicação do vídeo são responsabilidade da equipe, conforme solicitado.
 

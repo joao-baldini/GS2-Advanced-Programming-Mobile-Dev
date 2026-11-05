@@ -116,6 +116,20 @@ curl.exe -X POST http://localhost:8080/api/observations -H "Content-Type: applic
 
 O projeto entrega ingestão normalizada das três origens. Sensores e boletins iniciais são **simulados**, identificados por `simulated=true` e pelo nome da fonte. Não há conexão automática com equipamentos ou bases governamentais ao vivo. Para usar uma base real, um coletor autorizado deve transformar seu registro para o JSON da API, informar fonte verificável, `observedAt` real e `simulated=false`. O próprio POST autenticado é a interface de importação.
 
+### Importar uma base pública real
+
+O coletor incluído consulta a temperatura atual do modelo meteorológico [Open-Meteo](https://open-meteo.com/en/docs) para a região da Sé. Com a API ativa, execute **na raiz do repositório**, usando Node.js 24:
+
+```powershell
+node scripts/import-public-weather.mjs
+```
+
+Ele acessa a internet, valida valor/unidade/horário e envia uma observação `PUBLIC_DATA` com `simulated=false` à ingestão autenticada. O app recebe o registro no próximo ciclo. Abaixo de 30 °C, a severidade é baixa e a situação é ajustada para `MONITORING`; não é descrita como emergência. Não se presume quantidade de pessoas afetadas. Os limiares de temperatura são regras demonstrativas, sem calibração epidemiológica.
+
+O Open-Meteo fornece **estimativas de um modelo meteorológico**, não um sensor de rua nem confirmação de ilha de calor. O texto do registro preserva essa limitação e a referência da fonte. Cada execução importa uma observação; não há agendamento nem deduplicação automática. O restante do app funciona mesmo quando essa fonte externa está indisponível.
+
+Configuração opcional do coletor: `INGESTION_KEY` (mesma chave do servidor) e `URBANRISK_API_URL` (padrão `http://localhost:8080`). A chave nunca é enviada ao Open-Meteo. Se uma fonte externa falhar ou retornar dados inválidos, o coletor informa o erro e não inventa uma leitura.
+
 A visão territorial é um **mapa esquemático**, sem tiles externos ou navegação. Posições são aproximadas e limitadas ao recorte de São Paulo; relatos do formulário usam o centro da cidade, mantendo o bairro informado. Os detalhes permitem abrir as coordenadas no OpenStreetMap. A lista é a referência para eventos sobrepostos ou fora do recorte.
 
 ## Recurso de análise para priorização
@@ -193,6 +207,8 @@ npx expo export --platform all
 ```
 
 O backend tem testes unitários da análise e testes de integração HTTP/JPA: persistência, origem, chave, validação, filtros, paginação global, métricas, CORS e ausência do simulador fora do modo demo. O frontend testa JSON, falha HTTP, timeout e recuperação da rede. O CI em [GitHub Actions](.github/workflows/ci.yml) verifica as duas stacks em cada push/PR.
+
+O coletor público tem três testes adicionais de normalização e rejeição de dados inválidos. Execute na raiz: `node --test scripts/tests/*.test.mjs`.
 
 O relatório de verificações e os limites de validação estão em [docs/VALIDACAO.md](docs/VALIDACAO.md). Para avaliar facilidade de uso, execute cadastro, leitura de um detalhe e recuperação da API com um morador e um agente, anotando tempo e dificuldades; não foi realizado estudo com usuários nesta entrega.
 
