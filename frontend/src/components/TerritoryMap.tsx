@@ -26,8 +26,8 @@ export function TerritoryMap({
   }, [viewport]);
   const dragStart = useRef(viewport);
   const layout = useRef({ width: MAP_WIDTH, height: MAP_HEIGHT });
+  // eslint-disable-next-line react-hooks/refs -- PanResponder registers callbacks; refs are read only later, during gestures.
   const [responder] = useState(() =>
-    // eslint-disable-next-line react-hooks/refs -- PanResponder stores these event callbacks without calling them during render.
     PanResponder.create({
       onMoveShouldSetPanResponder: (_event, gesture) =>
         current.current.zoom > 1 &&
