@@ -216,7 +216,7 @@ O relatório de verificações e os limites de validação estão em [docs/VALID
 
 - [Roteiro detalhado em Markdown](docs/ROTEIRO_APRESENTACAO.md), com preparação, comandos, cenas, falas e resultados esperados no estilo da Sprint 4.
 - [Roteiro em PDF](output/pdf/Roteiro_Global_Solution_UrbanRisk.pdf).
-- [ENTREGA_GS.txt](ENTREGA_GS.txt), com os três integrantes e o link do repositório, para enviar ao portal FIAP até **19/11/2026 às 23h55**.
+- Para o portal FIAP, prepare um arquivo `.txt` com os três integrantes/RMs acima e o link deste repositório. Prazo: **19/11/2026 às 23h55**.
 - **Vídeo da apresentação: a gravar pela equipe.** Depois de publicar, acrescente aqui a URL real. O roteiro propõe cerca de 5 minutos; o enunciado fornecido não fixa duração.
 
 O histórico de commits registra etapas de implementação, integração e documentação. Cada integrante deve realizar suas contribuições com a própria identidade Git; não são atribuídos commits fictícios a outros membros.
