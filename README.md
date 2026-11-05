@@ -130,7 +130,7 @@ O Open-Meteo fornece **estimativas de um modelo meteorológico**, não um sensor
 
 Configuração opcional do coletor: `INGESTION_KEY` (mesma chave do servidor) e `URBANRISK_API_URL` (padrão `http://localhost:8080`). A chave nunca é enviada ao Open-Meteo. Se uma fonte externa falhar ou retornar dados inválidos, o coletor informa o erro e não inventa uma leitura.
 
-A visão territorial é um **mapa esquemático**, sem tiles externos ou navegação. Posições são aproximadas e limitadas ao recorte de São Paulo; relatos do formulário usam o centro da cidade, mantendo o bairro informado. Os detalhes permitem abrir as coordenadas no OpenStreetMap. A lista é a referência para eventos sobrepostos ou fora do recorte.
+A visão territorial é um **mapa esquemático**, com controles de aproximação de 100% a 400%, afastamento e restauração da visão inicial. Após aproximar, arraste para explorar. Posições são aproximadas e limitadas ao recorte de São Paulo; relatos do formulário usam o centro da cidade, mantendo o bairro informado. Os detalhes permitem abrir as coordenadas no OpenStreetMap. A lista é a referência para eventos sobrepostos ou fora do recorte. Não há navegação de rotas ou tiles externos.
 
 ## Recurso de análise para priorização
 
@@ -214,10 +214,8 @@ O relatório de verificações e os limites de validação estão em [docs/VALID
 
 ## Apresentação e entrega
 
-- [Roteiro detalhado em Markdown](docs/ROTEIRO_APRESENTACAO.md), com preparação, comandos, cenas, falas e resultados esperados no estilo da Sprint 4.
-- [Roteiro em PDF](output/pdf/Roteiro_Global_Solution_UrbanRisk.pdf).
 - Para o portal FIAP, prepare um arquivo `.txt` com os três integrantes/RMs acima e o link deste repositório. Prazo: **19/11/2026 às 23h55**.
-- **Vídeo da apresentação: a gravar pela equipe.** Depois de publicar, acrescente aqui a URL real. O roteiro propõe cerca de 5 minutos; o enunciado fornecido não fixa duração.
+- **Vídeo da apresentação: a gravar pela equipe.** Depois de publicar, acrescente aqui a URL real. O enunciado fornecido não fixa duração.
 
 O histórico de commits registra etapas de implementação, integração e documentação. Cada integrante deve realizar suas contribuições com a própria identidade Git; não são atribuídos commits fictícios a outros membros.
 

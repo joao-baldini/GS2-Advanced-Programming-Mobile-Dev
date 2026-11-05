@@ -194,10 +194,6 @@ export default function App() {
             <Text style={s.tipCopy}>
               Informação confiável para decisões mais seguras na sua cidade.
             </Text>
-            <View style={[s.row, { marginTop: 16 }]}>
-              <View style={[s.dot, { backgroundColor: C.green }]} />
-              <Text style={s.small}>Projeto Global Solution 2026</Text>
-            </View>
           </View>
           <View style={s.profile}>
             <View style={s.avatar}>
@@ -514,7 +510,7 @@ export default function App() {
           {page === "overview" && (
             <>
               <View style={[s.mainGrid, !wide && { flexDirection: "column" }]}>
-                <View style={[s.panel, { flex: 1.6 }]}>
+                <View style={[s.panel, wide && { flex: 1.6 }]}>
                   <View style={s.panelHead}>
                     <View>
                       <Text style={s.panelTitle}>Riscos no território</Text>
@@ -546,7 +542,7 @@ export default function App() {
                     ))}
                   </View>
                 </View>
-                <View style={[s.panel, { flex: 1 }]}>
+                <View style={[s.panel, wide && { flex: 1 }]}>
                   <View style={s.panelHead}>
                     <View style={s.row}>
                       <View style={s.priorityIcon}>
@@ -583,7 +579,7 @@ export default function App() {
               <View
                 style={[s.bottomGrid, !wide && { flexDirection: "column" }]}
               >
-                <View style={[s.panel, { flex: 1.6 }]}>
+                <View style={[s.panel, wide && { flex: 1.6 }]}>
                   <View style={s.panelHead}>
                     <Text style={s.panelTitle}>Últimas ocorrências</Text>
                     <Text style={s.small}>Mais recentes primeiro</Text>
@@ -608,7 +604,7 @@ export default function App() {
                     />
                   )}
                 </View>
-                <View style={[s.panel, { flex: 1 }]}>
+                <View style={[s.panel, wide && { flex: 1 }]}>
                   <View style={s.panelHead}>
                     <Text style={s.panelTitle}>Panorama dos riscos</Text>
                     <Activity size={18} color={C.muted} />

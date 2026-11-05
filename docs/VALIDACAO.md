@@ -5,7 +5,7 @@ Verificação local em **05/11/2026**, Windows, JDK 17, Node.js 24, H2 e prévia
 | Verificação | Resultado |
 | --- | --- |
 | Backend: `mvn test` | 12 testes aprovados (8 integração HTTP/JPA + 4 análise) |
-| Frontend: `npm test` | 4 testes aprovados: JSON, HTTP inválido, timeout e recuperação |
+| Frontend: `npm test` | 7 testes: HTTP, timeout, recuperação e limites do mapa |
 | TypeScript: `npm run typecheck` | Sem erros |
 | Qualidade: `npm run lint` | Aprovado |
 | SDK: `npx expo install --check` | Dependências compatíveis |
@@ -37,9 +37,9 @@ Verificação local em **05/11/2026**, Windows, JDK 17, Node.js 24, H2 e prévia
 | Camadas e testes | Separação de controller/service/repository; JUnit/MockMvc e testes do HTTP cliente |
 | Recurso de IA ou análise | Análise multicritério explicável, sem alegação de IA treinada |
 | Escalabilidade | Paginação/ordenação no banco, agregações, índice e configuração de banco externo |
-| Disponibilidade | Timeout, cache, reconexão, health check e roteiro de falha real |
+| Disponibilidade | Timeout, cache, reconexão, health check e teste de falha real |
 | Proteção de dados | Minimização, CORS, validação, chave de ingestão e ausência de identificadores pessoais no formulário |
-| Execução, equipe e entrega | README, TXT com três RMs e roteiro Markdown/PDF |
+| Execução, equipe e entrega | README com instruções, integrantes e RMs |
 
 ## Limites da verificação
 
