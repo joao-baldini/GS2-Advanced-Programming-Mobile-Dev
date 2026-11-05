@@ -40,7 +40,7 @@ npm ci
 npm run web
 ```
 
-Abra [localhost:8081](http://localhost:8081). Esta é a versão web do **mesmo código React Native**, com React Native Web; não é um frontend separado. A interface se adapta a celular e desktop. A aplicação não apresenta mocks locais no fluxo de consulta: tudo vem da API ou do cache identificado como desatualizado quando há falha.
+Abra [localhost:8081](http://localhost:8081). A versão web compartilha o código React Native do aplicativo, com interface adaptável a celular e desktop. Os dados são consultados na API e armazenados em cache local para leitura durante falhas de conexão.
 
 ### Android e iPhone
 
@@ -61,10 +61,10 @@ Leia o QR Code com o Expo Go compatível. No iPhone, use a câmera; no Android, 
 
 Alternativa: copie `frontend/.env.example` para `frontend/.env.local` e ajuste o IP. Reinicie o Expo ao alterar essa configuração. A URL não contém chave de ingestão; variáveis `EXPO_PUBLIC_*` são públicas no aplicativo.
 
-## Como demonstrar a solução
+## Teste de integração
 
 1. Com backend e Expo ativos, confira `GET /api/events` e `GET /api/dashboard`. Compare um registro com o painel do app.
-2. Abra o detalhe de uma ocorrência. Mostre tipo, fonte, confiança, horário, leitura, pontuação, quatro fatores e recomendação. A rota de detalhe consulta novamente a API; se ela falhar, o detalhe identifica a consulta salva.
+2. Abra o detalhe de uma ocorrência e confira tipo, fonte, confiança, horário, leitura, pontuação e recomendação. A rota de detalhe consulta novamente a API; se ela falhar, o detalhe identifica a consulta salva.
 3. Toque em **Registrar ocorrência**, informe título, bairro, descrição, severidade e estimativa de pessoas afetadas. O registro é enviado por `POST /api/events` e recebe ID do backend. Compare com o JSON.
 4. Toque em **Simular leitura** ou execute o comando abaixo em outro terminal. Não atualize a página: em aproximadamente 5 segundos, o evento aparece no painel e, se prioritário, na **Central de alertas**. O primeiro carregamento estabelece a referência e não gera notificações dos registros antigos.
 5. **Pare apenas o backend** com `Ctrl+C` no Terminal 1. Mantenha o Expo e o app abertos. Em até aproximadamente 8 segundos (intervalo de 5 s + timeout de 3 s), o app mostra **Desconectado** e **Backend desconectado**. A última consulta permanece visível, com horário e aviso de desatualização. Navegação, busca e leitura do cache continuam disponíveis.
@@ -134,7 +134,7 @@ A visão territorial é um **mapa esquemático**, com controles de aproximação
 
 ## Recurso de análise para priorização
 
-Foi escolhida a alternativa de **análise**, prevista no enunciado. É um modelo multicritério determinístico e explicável, sem treinamento de IA e sem depender de serviços pagos.
+A prioridade utiliza análise multicritério determinística, calculada no backend a partir dos quatro fatores abaixo.
 
 ```text
 prioridade = severidade + confiança + impacto estimado + recência
@@ -168,12 +168,12 @@ Spring Boot
 
 - Backend separado em `controller`, `dto`, `service`, `repository`, `model` e `config`.
 - API sem estado de sessão, filtros e paginação no banco, índice de status/tipo/data, prioridade base materializada e recência calculada na consulta. Indicadores usam agregações no banco.
-- H2 é adequado à demonstração com **uma instância**. O driver PostgreSQL está incluído; configurar URL/usuário/senha permite planejar armazenamento externo, mas esta entrega foi validada em H2. A aplicação não implanta cluster, balanceador, backups ou réplica automaticamente.
-- O app limita sua consulta às 1.000 ocorrências de maior prioridade para proteger memória e rede. A API permite continuar a paginação. Em uma implantação maior, a evolução prevista é paginação incremental no cliente, filtros remotos, migrações Flyway e transporte por SSE/push conforme a necessidade.
-- Cache, timeout, reconexão automática e health check dão suporte à disponibilidade percebida. Não garantem disponibilidade do servidor.
+- Persistência local em H2, com uma instância da API. O driver PostgreSQL está incluído para configuração de banco externo por URL, usuário e senha.
+- O app consulta até 1.000 ocorrências de maior prioridade. A API permite continuar a paginação.
+- Cache local, timeout, reconexão automática e health check.
 - Cadastro sem nome, CPF, e-mail ou telefone, orientação para evitar dados pessoais, localização aproximada e chave restrita aos coletores. Não há telemetria de localização nem login de moradores.
 - CORS limitado às origens configuradas, limites de texto/valores, erros sem stack trace e alterações de status protegidas. Validação de coordenadas e observações futuras no servidor.
-- Para implantação real: HTTPS, segredo próprio, `DEMO_ENABLED=false`, rate limiting, autenticação de agentes, moderação de conteúdo, política de retenção e migrações versionadas. `ddl-auto=update` é uma configuração de desenvolvimento. Evite dados pessoais nos campos livres; não se afirma conformidade integral de produção.
+- Esquema do banco atualizado por `ddl-auto=update` no ambiente de desenvolvimento.
 
 Variáveis do backend:
 
@@ -209,14 +209,5 @@ npx expo export --platform all
 O backend tem testes unitários da análise e testes de integração HTTP/JPA: persistência, origem, chave, validação, filtros, paginação global, métricas, CORS e ausência do simulador fora do modo demo. O frontend testa JSON, falha HTTP, timeout e recuperação da rede. O CI em [GitHub Actions](.github/workflows/ci.yml) verifica as duas stacks em cada push/PR.
 
 O coletor público tem três testes adicionais de normalização e rejeição de dados inválidos. Execute na raiz: `node --test scripts/tests/*.test.mjs`.
-
-O relatório de verificações e os limites de validação estão em [docs/VALIDACAO.md](docs/VALIDACAO.md). Para avaliar facilidade de uso, execute cadastro, leitura de um detalhe e recuperação da API com um morador e um agente, anotando tempo e dificuldades; não foi realizado estudo com usuários nesta entrega.
-
-## Apresentação e entrega
-
-- Para o portal FIAP, prepare um arquivo `.txt` com os três integrantes/RMs acima e o link deste repositório. Prazo: **19/11/2026 às 23h55**.
-- **Vídeo da apresentação: a gravar pela equipe.** Depois de publicar, acrescente aqui a URL real. O enunciado fornecido não fixa duração.
-
-O histórico de commits registra etapas de implementação, integração e documentação. Cada integrante deve realizar suas contribuições com a própria identidade Git; não são atribuídos commits fictícios a outros membros.
 
 Referências técnicas: [Spring Boot / Java 17](https://docs.spring.io/spring-boot/3.5/system-requirements.html), [Expo para web](https://docs.expo.dev/workflow/web/) e [atualização/compatibilidade de SDK](https://docs.expo.dev/workflow/upgrading-expo-sdk-walkthrough/).
