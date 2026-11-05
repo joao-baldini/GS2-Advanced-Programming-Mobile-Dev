@@ -34,6 +34,17 @@ class ApiIntegrationTest {
     @Test void statusChangesAreProtected() throws Exception {
         mvc.perform(patch("/api/events/1/status").contentType("application/json").content("{\"status\":\"RESOLVED\"}")).andExpect(status().isUnauthorized());
     }
+    @Test void paginatedQueriesAreGloballyRankedAndMetricsAgree() throws Exception {
+        mvc.perform(post("/api/events").contentType("application/json").content(body("COMMUNITY"))).andExpect(status().isCreated());
+        mvc.perform(post("/api/observations").header("X-Ingestion-Key","test-key").contentType("application/json").content(body("SENSOR").replace("\"HIGH\"","\"CRITICAL\""))).andExpect(status().isCreated());
+        var mapper=new com.fasterxml.jackson.databind.ObjectMapper();
+        var first=mapper.readTree(mvc.perform(get("/api/events?size=1&page=0")).andExpect(status().isOk()).andReturn().getResponse().getContentAsString());
+        var second=mapper.readTree(mvc.perform(get("/api/events?size=1&page=1")).andExpect(status().isOk()).andReturn().getResponse().getContentAsString());
+        org.assertj.core.api.Assertions.assertThat(first.get("items").get(0).get("analysis").get("score").asInt()).isGreaterThanOrEqualTo(second.get("items").get(0).get("analysis").get("score").asInt());
+        org.assertj.core.api.Assertions.assertThat(first.get("items").get(0).get("id")).isNotEqualTo(second.get("items").get(0).get("id"));
+        mvc.perform(get("/api/dashboard")).andExpect(status().isOk()).andExpect(jsonPath("critical").isNumber()).andExpect(jsonPath("averageConfidence").isNumber());
+        mvc.perform(get("/api/events?type=FLOOD&status=ACTIVE&neighborhood=Ipiranga")).andExpect(status().isOk()).andExpect(jsonPath("items[0].type").value("FLOOD"));
+    }
     @Test void demoRoutesAreAbsentWhenDisabled() throws Exception { mvc.perform(post("/api/demo/reading")).andExpect(status().isNotFound()); }
     @Test void corsAllowsOnlyConfiguredBrowserOrigin() throws Exception {
         mvc.perform(options("/api/events").header("Origin","http://localhost:8081").header("Access-Control-Request-Method","GET")).andExpect(status().isOk()).andExpect(header().string("Access-Control-Allow-Origin","http://localhost:8081"));

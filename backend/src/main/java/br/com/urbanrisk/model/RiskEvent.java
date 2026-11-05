@@ -19,7 +19,7 @@ public class RiskEvent {
     public double latitude;
     public double longitude;
     public double confidence;
-    public int basePriority;
+    @Column(nullable=false, columnDefinition="integer default 0") public int basePriority;
     public boolean simulated;
     public Double measuredValue;
     @Column(length=12) public String unit;

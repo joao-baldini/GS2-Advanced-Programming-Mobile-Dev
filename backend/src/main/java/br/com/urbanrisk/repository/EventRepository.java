@@ -8,6 +8,7 @@ import br.com.urbanrisk.model.EventStatus;
 import br.com.urbanrisk.model.RiskType;
 
 public interface EventRepository extends JpaRepository<RiskEvent, Long>, JpaSpecificationExecutor<RiskEvent> {
+    java.util.List<RiskEvent> findAllByBasePriority(int basePriority);
     long countByStatusNot(EventStatus status);
     long countByTypeAndStatusNot(RiskType type, EventStatus status);
     @Query("select coalesce(avg(e.confidence), 0) from RiskEvent e where e.status <> br.com.urbanrisk.model.EventStatus.RESOLVED")
