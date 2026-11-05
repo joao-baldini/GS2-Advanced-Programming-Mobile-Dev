@@ -1,0 +1,47 @@
+@base = http://localhost:8080
+@ingestionKey = urbanrisk-local-demo
+
+### Saúde da API
+GET {{base}}/actuator/health
+
+### Lista ordenada por prioridade
+GET {{base}}/api/events?page=0&size=20
+
+### Filtros opcionais
+GET {{base}}/api/events?type=FLOOD&status=ACTIVE&neighborhood=Ipiranga
+
+### Indicadores
+GET {{base}}/api/dashboard
+
+### Detalhes de um ID existente
+GET {{base}}/api/events/1
+
+### Nova leitura de demonstração (apenas DEMO_ENABLED=true)
+POST {{base}}/api/demo/reading
+
+### Ingestão de um sensor (troque a chave em ambiente real)
+POST {{base}}/api/observations
+Content-Type: application/json
+X-Ingestion-Key: {{ingestionKey}}
+
+< ./examples/sensor.json
+
+### Importação normalizada de uma base pública
+POST {{base}}/api/observations
+Content-Type: application/json
+X-Ingestion-Key: {{ingestionKey}}
+
+< ./examples/public-data.json
+
+### Relato comunitário
+POST {{base}}/api/events
+Content-Type: application/json
+
+< ./examples/community.json
+
+### Alteração de status protegida
+PATCH {{base}}/api/events/1/status
+Content-Type: application/json
+X-Ingestion-Key: {{ingestionKey}}
+
+{"status":"MONITORING"}

@@ -1,0 +1,15 @@
+{
+  "title": "Nível de água acima do limite",
+  "description": "Leitura simulada para apresentação acadêmica.",
+  "type": "FLOOD",
+  "severity": "CRITICAL",
+  "neighborhood": "Ipiranga",
+  "affectedPeople": 1800,
+  "latitude": -23.585,
+  "longitude": -46.61,
+  "source": "SENSOR",
+  "sourceName": "Sensor UR-EXEMPLO (simulado)",
+  "measuredValue": 3.2,
+  "unit": "m",
+  "simulated": true
+}

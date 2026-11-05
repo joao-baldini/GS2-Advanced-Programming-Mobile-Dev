@@ -1,0 +1,15 @@
+{
+  "title": "Boletim de calor intenso",
+  "description": "Exemplo de importação de base pública. Conteúdo simulado; substitua por um registro e referência verificáveis na integração real.",
+  "type": "HEAT",
+  "severity": "HIGH",
+  "neighborhood": "Sé",
+  "affectedPeople": 2400,
+  "latitude": -23.55,
+  "longitude": -46.633,
+  "source": "PUBLIC_DATA",
+  "sourceName": "Boletim meteorológico (base simulada)",
+  "measuredValue": 36.4,
+  "unit": "°C",
+  "simulated": true
+}

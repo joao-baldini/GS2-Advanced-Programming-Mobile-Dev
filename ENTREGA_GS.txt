@@ -1,0 +1,10 @@
+GLOBAL SOLUTION 2026.2 - Advanced Programming And Mobile Dev
+Urban Risk Intelligence Platform
+
+João Viviani Baldini - RM 558596
+Giuliano Ferreira Venceslau - RM 558674
+Enrico Nikolay Meirelles Zeronian - RM 558557
+
+Repositório: https://github.com/joao-baldini/GS2-Advanced-Programming-Mobile-Dev
+
+O código-fonte, as instruções de execução e o roteiro da apresentação estão no repositório.
