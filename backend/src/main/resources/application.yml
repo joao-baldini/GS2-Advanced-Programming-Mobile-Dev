@@ -1,0 +1,29 @@
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: never
+    include-stacktrace: never
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:h2:file:./data/urbanrisk;DB_CLOSE_ON_EXIT=FALSE}
+    username: ${DATABASE_USER:sa}
+    password: ${DATABASE_PASSWORD:}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+app:
+  demo-enabled: ${DEMO_ENABLED:true}
+  ingestion-key: ${INGESTION_KEY:urbanrisk-local-demo}
+  allowed-origins: ${ALLOWED_ORIGINS:http://localhost:8081,http://127.0.0.1:8081,http://localhost:19006}

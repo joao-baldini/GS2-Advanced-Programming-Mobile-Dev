@@ -1,0 +1,10 @@
+**/node_modules/
+**/target/
+**/.expo/
+**/dist/
+**/data/
+**/.env.local
+**/*.log
+tmp/
+.DS_Store
+.idea/
