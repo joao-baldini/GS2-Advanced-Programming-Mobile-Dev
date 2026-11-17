@@ -211,3 +211,5 @@ O backend tem testes unitários da análise e testes de integração HTTP/JPA: p
 O coletor público tem três testes adicionais de normalização e rejeição de dados inválidos. Execute na raiz: `node --test scripts/tests/*.test.mjs`.
 
 Referências técnicas: [Spring Boot / Java 17](https://docs.spring.io/spring-boot/3.5/system-requirements.html), [Expo para web](https://docs.expo.dev/workflow/web/) e [atualização/compatibilidade de SDK](https://docs.expo.dev/workflow/upgrading-expo-sdk-walkthrough/).
+
+Vídeo de demonstração: https://www.youtube.com/watch?v=iTsvsbpXRdc
