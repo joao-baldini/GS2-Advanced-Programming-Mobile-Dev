@@ -824,8 +824,8 @@ export default function App() {
                 <View style={{ flex: 1, gap: 5 }}>
                   <Text style={s.demoTitle}>Ambiente de demonstração</Text>
                   <Text style={s.small}>
-                    Dados iniciais simulados e persistidos na API. Envie uma
-                    leitura para acompanhar a atualização.
+                    Envie uma leitura simulada de sensor para acompanhar a
+                    ingestão, a priorização e a atualização em tempo real.
                   </Text>
                 </View>
               </View>

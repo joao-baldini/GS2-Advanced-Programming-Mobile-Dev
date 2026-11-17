@@ -30,7 +30,7 @@ cd backend
 mvn spring-boot:run
 ```
 
-Mantenha o terminal aberto. A API fica em [localhost:8080/api/events](http://localhost:8080/api/events); o health check, em [localhost:8080/actuator/health](http://localhost:8080/actuator/health). Na primeira execução, oito registros **simulados** são inseridos no banco vazio. O banco H2 em arquivo fica em `backend/data/urbanrisk.mv.db`, não é versionado e preserva os registros após reiniciar a API. Execute o Maven sempre dentro de `backend/` para manter o mesmo caminho do banco.
+Mantenha o terminal aberto. A API fica em [localhost:8080/api/events](http://localhost:8080/api/events); o health check, em [localhost:8080/actuator/health](http://localhost:8080/actuator/health). O banco começa vazio; os registros vêm do app ou da ingestão. O banco H2 em arquivo fica em `backend/data/urbanrisk.mv.db`, não é versionado e preserva os registros após reiniciar a API. Execute o Maven sempre dentro de `backend/` para manter o mesmo caminho do banco.
 
 **Terminal 2, na raiz: aplicativo na prévia web.**
 
@@ -74,7 +74,7 @@ Alternativa: copie `frontend/.env.example` para `frontend/.env.local` e ajuste o
 curl.exe -X POST http://localhost:8080/api/demo/reading
 ```
 
-O simulador permite uma leitura a cada 5 segundos, retorna `429` em excesso e só existe com `DEMO_ENABLED=true`. Ele cria observações **simuladas**, não altera o estado de conexão. Para testar desconexão, é necessário parar a API de verdade.
+O simulador permite uma leitura a cada 5 segundos, retorna `429` em excesso e só existe com `DEMO_ENABLED=true`. Ele cria observações **simuladas** (`simulated=true`) e não altera o estado de conexão. Para testar desconexão, é necessário parar a API de verdade.
 
 ### Alertas e atualização
 
@@ -114,7 +114,7 @@ curl.exe -X POST http://localhost:8080/api/observations -H "Content-Type: applic
 
 ### Origens e limites dos dados
 
-O projeto entrega ingestão normalizada das três origens. Sensores e boletins iniciais são **simulados**, identificados por `simulated=true` e pelo nome da fonte. Não há conexão automática com equipamentos ou bases governamentais ao vivo. Para usar uma base real, um coletor autorizado deve transformar seu registro para o JSON da API, informar fonte verificável, `observedAt` real e `simulated=false`. O próprio POST autenticado é a interface de importação.
+O projeto entrega ingestão normalizada das três origens. Registros enviados com `simulated=true` são identificados como simulados no app. Não há conexão automática com equipamentos ou bases governamentais ao vivo. Para usar uma base real, um coletor autorizado deve transformar seu registro para o JSON da API, informar fonte verificável, `observedAt` real e `simulated=false`. O próprio POST autenticado é a interface de importação.
 
 ### Importar uma base pública real
 
@@ -183,7 +183,7 @@ Variáveis do backend:
 | `DATABASE_URL` | `jdbc:h2:file:./data/urbanrisk;DB_CLOSE_ON_EXIT=FALSE` |
 | `DATABASE_USER`, `DATABASE_PASSWORD` | `sa`, vazia |
 | `INGESTION_KEY` | `urbanrisk-local-demo` |
-| `DEMO_ENABLED` | `true` (desative fora da demonstração) |
+| `DEMO_ENABLED` | `true` (habilita o botão **Simular leitura**; desative fora da demonstração) |
 | `ALLOWED_ORIGINS` | `http://localhost:8081,http://127.0.0.1:8081,http://localhost:19006` |
 
 ## Testar e verificar
